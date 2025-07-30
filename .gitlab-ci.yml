@@ -20,6 +20,9 @@ variables:
 validate-job:
   stage: validate
   image: $PACKER_IMAGE
+  tags:
+    - homelab
+    - local
   before_script:
     - echo "🔧 Setting up environment..."
     - echo "AWS Region:" $AWS_DEFAULT_REGION
@@ -40,6 +43,9 @@ validate-job:
 build-job:
   stage: build
   image: $PACKER_IMAGE
+  tags:
+    - homelab
+    - local
   script:
     - echo "🏗️ Building Ubuntu AMI..."
     - packer build \
@@ -61,6 +67,9 @@ build-job:
 deploy-job:
   stage: deploy
   image: alpine:latest
+  tags:
+    - homelab
+    - local
   script:
     - echo "AMI deployment completed successfully!"
     - echo "Check your AWS EC2 console for the new AMI"
