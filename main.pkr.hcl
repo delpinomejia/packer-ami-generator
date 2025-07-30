@@ -117,11 +117,7 @@ build {
   provisioner "ansible-local" {
     playbook_file = var.ansible_playbook
     extra_arguments = [
-      for key, value in var.ansible_extra_vars : "--extra-vars"
-      if value != ""
-    ]
-    extra_arguments = [
-      for key, value in var.ansible_extra_vars : "${key}=${value}"
+      for key, value in var.ansible_extra_vars : "--extra-vars ${key}=${value}"
       if value != ""
     ]
   }
