@@ -61,18 +61,9 @@ build-job:
 deploy-job:
   stage: deploy
   image: alpine:latest
-  before_script:
-    - apk add --no-cache aws-cli
   script:
-    - echo "🚀 AMI deployment completed!"
-    - echo "Your new AMI is now available in AWS region: $AWS_DEFAULT_REGION"
-    - echo "🔍 You can find it in the AWS EC2 console under 'AMIs'"
-    - echo "💡 To launch an instance from this AMI:"
-    - echo "  1. Go to EC2 console"
-    - echo "  2. Click 'Launch Instance'"
-    - echo "  3. Search for AMIs with your config's name prefix"
-    - echo "  4. Select your custom AMI and launch!"
-    - echo "✨ Happy computing!"
+    - echo "AMI deployment completed successfully!"
+    - echo "Check your AWS EC2 console for the new AMI"
   only:
     - main
   dependencies:
