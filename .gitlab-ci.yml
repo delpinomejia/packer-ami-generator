@@ -67,12 +67,11 @@ deploy-job:
     - echo "🚀 AMI deployment completed!"
     - echo "Your new AMI is now available in AWS region: $AWS_DEFAULT_REGION"
     - echo "🔍 You can find it in the AWS EC2 console under 'AMIs'"
-    - |
-      echo "💡 To launch an instance from this AMI:"
-      echo "  1. Go to EC2 console"
-      echo "  2. Click 'Launch Instance'"
-      echo "  3. Search for AMIs with your config's name prefix"
-      echo "  4. Select your custom AMI and launch!"
+    - echo "💡 To launch an instance from this AMI:"
+    - echo "  1. Go to EC2 console"
+    - echo "  2. Click 'Launch Instance'"
+    - echo "  3. Search for AMIs with your config's name prefix"
+    - echo "  4. Select your custom AMI and launch!"
     - echo "✨ Happy computing!"
   only:
     - main
