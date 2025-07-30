@@ -4,7 +4,20 @@ variables:
   TEMP_DIR: "generated"
   BUILD_SCRIPT: "scripts/build.sh"
   ANSIBLE_PLAYBOOK: "ansible/playbook.yml"
-  INVENTORY_PATH: "inventories/$CI_COMMIT_REF_NAME"
+
+# Dynamic environment mapping
+.set_environment: &set_environment
+  - |
+    if [[ "$CI_COMMIT_REF_NAME" == "main" ]]; then
+      export ENVIRONMENT="dev"
+    elif [[ "$CI_COMMIT_REF_NAME" == "staging" ]]; then
+      export ENVIRONMENT="staging"
+    elif [[ "$CI_COMMIT_REF_NAME" == "prod" ]]; then
+      export ENVIRONMENT="prod"
+    else
+      export ENVIRONMENT="dev"  # Default fallback
+    fi
+    echo "Branch: $CI_COMMIT_REF_NAME -> Environment: $ENVIRONMENT"
 
 stages:
   - validate
@@ -14,21 +27,23 @@ stages:
 validate-job:
   stage: validate
   script:
-    - echo "Validating Packer configuration..."
+    - *set_environment
+    - echo "Validating Packer configuration for environment: $ENVIRONMENT"
     - chmod +x $BUILD_SCRIPT
-    - ./$BUILD_SCRIPT $CI_COMMIT_REF_NAME validate
+    - ./$BUILD_SCRIPT $ENVIRONMENT validate
   only:
-    - dev
+    - main
     - staging
     - prod
 
 build-job:
   stage: build
   script:
-    - echo "Building AMI or Docker images..."
-    - ./$BUILD_SCRIPT $CI_COMMIT_REF_NAME build
+    - *set_environment
+    - echo "Building AMI or Docker images for environment: $ENVIRONMENT"
+    - ./$BUILD_SCRIPT $ENVIRONMENT build
   only:
-    - dev
+    - main
     - staging
     - prod
   needs:
@@ -44,11 +59,12 @@ build-job:
 deploy-job:
   stage: deploy
   script:
-    - echo "Running Ansible deployment..."
-    - ansible-playbook -i $INVENTORY_PATH $ANSIBLE_PLAYBOOK
+    - *set_environment
+    - echo "Running Ansible deployment for environment: $ENVIRONMENT"
+    - ansible-playbook -i inventories/$ENVIRONMENT $ANSIBLE_PLAYBOOK
   when: manual
   only:
-    - dev
+    - main
     - staging
     - prod
   needs:
