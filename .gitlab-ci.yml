@@ -33,6 +33,13 @@ build-job:
     - prod
   needs:
     - validate-job
+  artifacts:
+    paths:
+      - packer_cache/
+      - builds/
+      - "*.log"
+    expire_in: 1 week
+    when: always
 
 deploy-job:
   stage: deploy
@@ -46,9 +53,4 @@ deploy-job:
     - prod
   needs:
     - build-job
-    
-artifacts:
-  paths:
-    - packer_cache/
-    - builds/
 
