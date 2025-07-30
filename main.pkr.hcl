@@ -145,8 +145,9 @@ build {
   }
 
   post-processor "docker-push" {
-    ecr_login = var.ecr_login
+    ecr_login    = var.ecr_login
     login_server = var.login_server
-    only = ["docker.ubuntu"]
+    login        = true
+    only         = ["docker.ubuntu"]
   }
 }

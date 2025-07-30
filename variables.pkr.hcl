@@ -120,7 +120,7 @@ variable "docker_tag" {
 variable "ecr_login" {
   type        = bool
   description = "Whether to log in to ECR"
-  default     = true
+  default     = false
 }
 
 variable "login_server" {
@@ -132,11 +132,13 @@ variable "login_server" {
 variable "login_user" {
   type        = string
   description = "Docker login user"
+  default     = ""
   sensitive   = true
 }
 
 variable "login_password" {
   type        = string
   description = "Docker login password"
+  default     = ""
   sensitive   = true
 }
