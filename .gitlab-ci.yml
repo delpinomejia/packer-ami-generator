@@ -19,7 +19,7 @@ variables:
 # Global before_script to ensure AWS credentials are available
 before_script:
   - echo "🔧 Setting up environment..."
-  - echo "AWS Region: ${AWS_DEFAULT_REGION}"
+  - echo "AWS Region:" $AWS_DEFAULT_REGION
   - echo "Packer version:"
   - packer version
 
