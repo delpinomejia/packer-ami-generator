@@ -16,17 +16,15 @@ variables:
   # Docker image for Packer
   PACKER_IMAGE: "hashicorp/packer:latest"
 
-# Global before_script to ensure AWS credentials are available
-before_script:
-  - echo "🔧 Setting up environment..."
-  - echo "AWS Region:" $AWS_DEFAULT_REGION
-  - echo "Packer version:"
-  - packer version
-
 # Validate Packer configuration
 validate-job:
   stage: validate
   image: $PACKER_IMAGE
+  before_script:
+    - echo "🔧 Setting up environment..."
+    - echo "AWS Region:" $AWS_DEFAULT_REGION
+    - echo "Packer version:"
+    - packer version
   script:
     - echo "✅ Validating Packer configuration..."
     - packer validate \
