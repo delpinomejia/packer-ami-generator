@@ -1,0 +1,10 @@
+{
+    "aws_region": "us-east-1",
+    "name": "Base-Ubuntu",
+    "instance_type": "t2.micro",
+    "environment": "prod",
+    "email": "infrastructure@example.com",
+    "php_version": "7.3",
+    "efs": "fs-e1c61f0c",
+    "signalfx": "vKCpF873q6yCnuN4YpbAXw"
+  }

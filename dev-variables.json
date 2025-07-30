@@ -1,0 +1,16 @@
+{
+    "aws_region": "us-east-1",
+    "name": "Base-Ubuntu",
+    "instance_type": "t2.small",
+    "environment": "dev",
+    "email": "dev-infrastructure@example.com",
+    "php_version": "7.3",
+    "ecr_repository": "447363861624.dkr.ecr.us-east-1.amazonaws.com/devops-ubuntu-php7",
+    "repository": "company/packer-php-base",
+    "login_server": "447363861624.dkr.ecr.us-east-1.amazonaws.com",
+    "login_user": "pablodelpino",
+    "login_password": "c#RvuK5iv.d6CJg",
+    "efs": "fs-a2509e4f",
+    "signalfx": "yvjNfDvNE6lkl8Lu3hZuaA",
+    "tag": "7.3"
+  }

@@ -1,0 +1,98 @@
+# Packer files
+packer_cache/
+*.pkrvars.hcl.backup
+*.pkr.hcl.backup
+crash.log
+manifest.json
+
+# Build artifacts
+builds/
+output-*/
+*.box
+*.ova
+*.ovf
+*.vmdk
+*.vdi
+
+# Terraform files (if mixed project)
+*.tfstate
+*.tfstate.*
+*.tfvars
+*.tfvars.backup
+.terraform/
+.terraform.lock.hcl
+terraform.tfplan
+
+# Ansible files
+*.retry
+ansible.cfg
+hosts.ini
+
+# AWS credentials and sensitive data
+.aws/
+aws-credentials
+*.pem
+*.key
+*.p12
+*.pfx
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependencies
+node_modules/
+vendor/
+
+# Temporary files
+tmp/
+temp/
+.tmp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Version control
+.git/
+.svn/
+.hg/
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+*.7z
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
