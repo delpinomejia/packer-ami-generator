@@ -1,0 +1,54 @@
+# .gitlab-ci.yml - Deployment pipeline for packer-ami-generator-v1 project
+
+variables:
+  TEMP_DIR: "generated"
+  BUILD_SCRIPT: "scripts/build.sh"
+  ANSIBLE_PLAYBOOK: "ansible/playbook.yml"
+  INVENTORY_PATH: "inventories/$CI_COMMIT_REF_NAME"
+
+stages:
+  - validate
+  - build
+  - deploy
+
+validate-job:
+  stage: validate
+  script:
+    - echo "Validating Packer configuration..."
+    - chmod +x $BUILD_SCRIPT
+    - ./$BUILD_SCRIPT $CI_COMMIT_REF_NAME validate
+  only:
+    - dev
+    - staging
+    - prod
+
+build-job:
+  stage: build
+  script:
+    - echo "Building AMI or Docker images..."
+    - ./$BUILD_SCRIPT $CI_COMMIT_REF_NAME build
+  only:
+    - dev
+    - staging
+    - prod
+  needs:
+    - validate-job
+
+deploy-job:
+  stage: deploy
+  script:
+    - echo "Running Ansible deployment..."
+    - ansible-playbook -i $INVENTORY_PATH $ANSIBLE_PLAYBOOK
+  when: manual
+  only:
+    - dev
+    - staging
+    - prod
+  needs:
+    - build-job
+    
+artifacts:
+  paths:
+    - packer_cache/
+    - builds/
+
