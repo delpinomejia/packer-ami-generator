@@ -5,7 +5,7 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04_LTS-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
 ![Packer](https://img.shields.io/badge/Packer-Latest-1DAEFF?style=for-the-badge&logo=packer&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![GitLab CI](https://img.shields.io/badge/GitLab_CI-CD-FCA326?style=for-the-badge&logo=gitlab&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CD-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Security](https://img.shields.io/badge/Security-ClamAV-FF6B6B?style=for-the-badge&logo=shield&logoColor=white)
 
@@ -45,7 +45,7 @@
 
 ### 🚀 **Professional Features**
 - 📊 **Cost Optimization** - t3.small instance (only $0.12-$0.22 per build)
-- 🔄 **GitLab CI/CD** - Fully automated pipeline
+- 🔄 **GitHub Actions** - Fully automated pipeline
 - 🧪 **Local Testing** - Dry-run capabilities
 - 📈 **Build Reporting** - Comprehensive logs and metrics
 - ⚙️ **Configurable** - Flexible variable system
@@ -93,8 +93,8 @@ graph TB
 
 ### 1️⃣ **Clone Repository**
 ```bash
-git clone ssh://git@gitlab.com/pdelpino/packer-ami-generator-v1.git
-cd packer-ami-generator-v1
+git clone https://github.com/delpinomejia/packer-ami-generator.git
+cd packer-ami-generator
 ```
 
 ### 2️⃣ **Install Prerequisites**
@@ -204,8 +204,13 @@ packer build -var-file="variables.pkrvars.hcl" packer.pkr.hcl | tee build.log
 
 ### 🧪 **Dry Run Testing**
 ```powershell
-# Test pipeline without AWS costs
+# Windows PowerShell - Test pipeline without AWS costs
 .\test-pipeline-simple.ps1
+```
+
+```bash
+# Linux/macOS Bash - Test pipeline without AWS costs
+./test-pipeline-simple.sh
 ```
 
 ### 📊 **Build Monitoring**
@@ -218,15 +223,15 @@ tail -f build.log | grep -E "(==>|\s+\w+:)"
 
 ## 🔄 CI/CD Pipeline
 
-### 🚀 **GitLab CI Pipeline Stages**
+### 🚀 **GitHub Actions Workflow Stages**
 
 ```yaml
-# .gitlab-ci.yml
-stages:
-  - validate      # ✅ Template validation
+# .github/workflows/ci.yml
+jobs:
+  - validate      # 🔍 Template validation
   - cost-estimate # 💰 Cost calculation
-  - build         # 🏗️ AMI creation (manual)
-  - verify        # 🔍 AMI verification
+  - build         # 🏗️ AMI creation (manual approval)
+  - verify        # ✅ AMI verification
   - report        # 📊 Build reporting
 ```
 
@@ -236,15 +241,17 @@ stages:
 |-------|----------|----------|
 | 🔍 **Validate** | ~30s | Template syntax check |
 | 💰 **Cost Estimate** | ~10s | Build cost prediction |
-| 🏗️ **Build** | 15-30min | AMI creation (manual trigger) |
+| 🏗️ **Build** | 15-30min | AMI creation (manual approval required) |
 | ✅ **Verify** | ~30s | AMI availability check |
 | 📊 **Report** | ~10s | Comprehensive build report |
 
-### 🎮 **Manual Triggers**
+### 🎮 **Manual Approval & Triggers**
 The build stage requires manual approval for cost control:
-1. Navigate to **CI/CD > Pipelines** in GitLab
-2. Click ▶️ **Manual** on the build stage
-3. Monitor progress in real-time
+1. Navigate to **Actions** tab in GitHub
+2. Select the workflow run
+3. Click **Review deployments** for production environment
+4. **Approve** the deployment to proceed with AMI build
+5. Monitor progress in real-time
 
 ---
 
@@ -273,14 +280,21 @@ The build stage requires manual approval for cost control:
 
 ## 🧪 Testing
 
-### 🖥️ **Local Testing Script**
+### 🖥️ **Local Testing Scripts**
 
 ```powershell
-# Dynamic cost calculation based on your config
+# Windows PowerShell - Dynamic cost calculation based on your config
 .\test-pipeline-simple.ps1
 
 # Test specific stage
 .\test-pipeline-simple.ps1 -Stage validate
+```
+
+```bash
+# Linux/macOS Bash - Dynamic cost calculation based on your config
+./test-pipeline-simple.sh
+
+# Note: Bash version runs full pipeline simulation (no stage-specific options)
 ```
 
 ### 📋 **Test Coverage**
@@ -296,16 +310,20 @@ The build stage requires manual approval for cost control:
 ## 📁 Project Structure
 
 ```
-packer-ami-generator-v1/
-├── 📄 packer.pkr.hcl           # Main Packer template
-├── ⚙️  variables.pkrvars.hcl    # Configuration variables
-├── 🔄 .gitlab-ci.yml           # CI/CD pipeline
+packer-ami-generator/
+├── 📄 packer.pkr.hcl              # Main Packer template
+├── ⚙️  variables.pkrvars.hcl       # Configuration variables
+├── 📂 .github/
+│   └── 🏗️ workflows/
+│       └── 🔄 ci.yml            # GitHub Actions pipeline
 ├── 📂 ansible/
 │   └── 📜 playbook.yml         # Software provisioning
-├── 🧪 test-pipeline-simple.ps1 # Local testing script
-├── 📊 gitlab-task-template.md  # Project documentation
-├── 📚 README.md               # This file
-└── 📄 .gitignore              # Version control exclusions
+├── 📂 docs/
+│   └── 🐛 troubleshooting/      # Troubleshooting guides
+├── 🧪 test-pipeline-simple.ps1   # Local testing script (Windows)
+├── 🧪 test-pipeline-simple.sh    # Local testing script (Linux/macOS)
+├── 📚 README.md                 # This file
+└── 📄 .gitignore                # Version control exclusions
 ```
 
 ---
@@ -332,58 +350,28 @@ aws iam rotate-access-key
 
 ## 🐛 Troubleshooting
 
-### 📚 **Troubleshooting Documentation**
+### 📚 **Comprehensive Troubleshooting Guide**
 
-- 📖 **[Unicode Encoding Issues](docs/troubleshooting/unicode-encoding-gitlab-ci.md)** - Fix GitLab CI YAML syntax errors
-- 🔧 **[Common Pipeline Issues](docs/troubleshooting/)** - General troubleshooting guide
+**📖 [TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Complete guide covering:
+- ❌ Permission denied errors on package installation
+- 📁 Artifact file creation issues (`cost_estimate.env`)
+- 🔤 Unicode encoding problems in GitLab CI YAML
+- 🐳 Container vs local runner compatibility
+- 🔧 Best practices and debugging commands
 
-### ❌ **Common Issues**
+### ⚡ **Quick Fixes**
 
-<details>
-<summary>🔍 <strong>Packer Validation Fails</strong></summary>
-
-**Problem**: Template validation errors
-
-**Solution**:
-```bash
-# Check Packer version
-packer version
-
-# Validate with verbose output
-packer validate -var-file="variables.pkrvars.hcl" packer.pkr.hcl
-```
-</details>
-
-<details>
-<summary>🔑 <strong>AWS Credential Errors</strong></summary>
-
-**Problem**: Authentication failures
-
-**Solution**:
-```bash
-# Verify credentials
-aws sts get-caller-identity
-
-# Check permissions
-aws iam get-user
-```
-</details>
-
-<details>
-<summary>💰 <strong>Unexpected Costs</strong></summary>
-
-**Problem**: Higher than expected AWS charges
-
-**Solution**:
-- Use the dry-run script first: `./test-pipeline-simple.ps1`
-- Monitor builds in AWS Console
-- Set up billing alerts
-</details>
+| Issue | Quick Solution |
+|-------|----------------|
+| 🔍 **Validation Fails** | `packer validate -var-file="variables.pkrvars.hcl" packer.pkr.hcl` |
+| 🔑 **AWS Credentials** | `aws sts get-caller-identity` to verify |
+| 💰 **Cost Concerns** | Use `./test-pipeline-simple.ps1` for dry run |
+| 🐛 **Pipeline Issues** | Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
 
 ### 📞 **Support**
-- 📚 Check the [GitLab Issues](https://gitlab.com/pdelpino/packer-ami-generator-v1/-/issues)
+- 📚 [GitHub Issues](https://github.com/delpinomejia/packer-ami-generator/issues)
 - 📧 Review build logs in GitLab CI
-- 🧪 Use the testing script for diagnostics
+- 🧪 Use testing scripts for diagnostics
 
 ---
 
@@ -393,13 +381,13 @@ This project was developed through collaborative effort:
 
 ### 🏗️ **Core Development Team**
 
-**[@pdelpino](https://gitlab.com/pdelpino)** - *Project Lead & Architecture*
+**[@delpinomejia](https://github.com/delpinomejia)** - *Project Lead & Architecture*
 - 🎯 Project vision and requirements
 - 🏗️ Infrastructure architecture design
 - 🔧 AWS deployment and validation
 - 📊 Cost optimization strategy
 
-**Igor (AI Assistant)** - *Technical Implementation & Documentation*
+**Igor The Student (AI Assistant)** - *Technical Implementation  Documentation*
 - 💻 Packer template development and optimization
 - 🔄 GitLab CI/CD pipeline design and implementation
 - 📚 Comprehensive documentation and visual guides
@@ -427,17 +415,29 @@ This project was developed through collaborative effort:
 ### 📋 **Development Setup**
 ```bash
 # Clone your fork
-git clone https://gitlab.com/YOUR-USERNAME/packer-ami-generator-v1.git
+git clone https://github.com/YOUR-USERNAME/packer-ami-generator.git
 
 # Install development dependencies
 packer version  # Ensure Packer is installed
 aws --version   # Ensure AWS CLI is installed
 
-# Run tests
-./test-pipeline-simple.ps1
+# Run tests (choose based on your platform)
+./test-pipeline-simple.ps1    # Windows PowerShell
+./test-pipeline-simple.sh     # Linux/macOS Bash
 ```
 
----
+
+## 🏆 Credits
+
+This project was developed with insights and practices gathered from various key sources:
+
+- **[HashiCorp Packer Documentation](https://www.packer.io/docs)** - Essential guide for creating machine images with Packer.
+- **[GitHub Actions Documentation](https://docs.github.com/en/actions)** - Comprehensive resource for learning and implementing GitHub Actions.
+- **[AWS CLI User Guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)** - Guidelines for setting up AWS CLI and environment variables.
+- **[Ubuntu Documentation](https://ubuntu.com/server/docs)** - Official Ubuntu guidelines and administration resources.
+- **DevOps Community Blogs and Tutorials** - Community-driven insights on best practices for CI/CD and infrastructure automation.
+
+These resources helped shape the practices, structures, and inspiration used throughout this project.
 
 <div align="center">
 

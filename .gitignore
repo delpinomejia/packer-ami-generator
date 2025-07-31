@@ -1,0 +1,67 @@
+# =====================================================
+# Git Ignore for Packer AMI Generator
+# =====================================================
+
+# Packer build artifacts
+*.log
+packer_cache/
+crash.log
+manifest.json
+
+# Custom variable files with potentially sensitive data
+*.auto.pkrvars.hcl
+*secret*.pkrvars.hcl
+*prod*.pkrvars.hcl
+*production*.pkrvars.hcl
+
+# AWS credentials and config
+.aws/
+aws-credentials
+*.pem
+*.key
+
+# Temporary files
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Local environment files
+.env
+.env.local
+.env.production
+
+# Backup files
+*.bak
+*.backup
+
+# Local documentation and task templates (keep local only)
+gitlab-task-template.md
+project-completion-summary.md
+*task-summary*.md
+*completion*.md
+
+# Test and pipeline dry run files (keep local only)
+test-pipeline-local.ps1
+test-pipeline-*.ps1
+dryrun-*.ps1
+*-dryrun.*
+*-test.*
+cost_estimate.env
+build.env
