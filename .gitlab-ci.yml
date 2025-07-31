@@ -7,6 +7,15 @@ variables:
   # Docker images
   PACKER_IMAGE: "hashicorp/packer:latest"
   AWS_CLI_IMAGE: "amazon/aws-cli:latest"
+  
+  # Packer configuration
+  PACKER_LOG: "1"
+  PACKER_LOG_PATH: "packer-build.log"
+  PACKER_CONFIG_FILE: "variables.pkrvars.hcl"
+  PACKER_TEMPLATE: "packer.pkr.hcl"
+  
+  # AWS and AMI configuration
+  AMI_NAME_PREFIX: "ubuntu-24-04-custom"
 
 build-job:
   stage: build
