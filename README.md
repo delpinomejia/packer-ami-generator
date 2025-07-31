@@ -412,7 +412,18 @@ aws --version   # Ensure AWS CLI is installed
 ./test-pipeline-simple.ps1
 ```
 
----
+
+## 🏆 Credits
+
+This project was developed with insights and practices gathered from various key sources:
+
+- **[HashiCorp Packer Documentation](https://www.packer.io/docs)** - Essential guide for creating machine images with Packer.
+- **[GitHub Actions Documentation](https://docs.github.com/en/actions)** - Comprehensive resource for learning and implementing GitHub Actions.
+- **[AWS CLI User Guide](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-envvars.html)** - Guidelines for setting up AWS CLI and environment variables.
+- **[Ubuntu Documentation](https://ubuntu.com/server/docs)** - Official Ubuntu guidelines and administration resources.
+- **DevOps Community Blogs and Tutorials** - Community-driven insights on best practices for CI/CD and infrastructure automation.
+
+These resources helped shape the practices, structures, and inspiration used throughout this project.
 
 <div align="center">
 
