@@ -332,58 +332,28 @@ aws iam rotate-access-key
 
 ## 🐛 Troubleshooting
 
-### 📚 **Troubleshooting Documentation**
+### 📚 **Comprehensive Troubleshooting Guide**
 
-- 📖 **[Unicode Encoding Issues](docs/troubleshooting/unicode-encoding-gitlab-ci.md)** - Fix GitLab CI YAML syntax errors
-- 🔧 **[Common Pipeline Issues](docs/troubleshooting/)** - General troubleshooting guide
+**📖 [TROUBLESHOOTING.md](TROUBLESHOOTING.md)** - Complete guide covering:
+- ❌ Permission denied errors on package installation
+- 📁 Artifact file creation issues (`cost_estimate.env`)
+- 🔤 Unicode encoding problems in GitLab CI YAML
+- 🐳 Container vs local runner compatibility
+- 🔧 Best practices and debugging commands
 
-### ❌ **Common Issues**
+### ⚡ **Quick Fixes**
 
-<details>
-<summary>🔍 <strong>Packer Validation Fails</strong></summary>
-
-**Problem**: Template validation errors
-
-**Solution**:
-```bash
-# Check Packer version
-packer version
-
-# Validate with verbose output
-packer validate -var-file="variables.pkrvars.hcl" packer.pkr.hcl
-```
-</details>
-
-<details>
-<summary>🔑 <strong>AWS Credential Errors</strong></summary>
-
-**Problem**: Authentication failures
-
-**Solution**:
-```bash
-# Verify credentials
-aws sts get-caller-identity
-
-# Check permissions
-aws iam get-user
-```
-</details>
-
-<details>
-<summary>💰 <strong>Unexpected Costs</strong></summary>
-
-**Problem**: Higher than expected AWS charges
-
-**Solution**:
-- Use the dry-run script first: `./test-pipeline-simple.ps1`
-- Monitor builds in AWS Console
-- Set up billing alerts
-</details>
+| Issue | Quick Solution |
+|-------|----------------|
+| 🔍 **Validation Fails** | `packer validate -var-file="variables.pkrvars.hcl" packer.pkr.hcl` |
+| 🔑 **AWS Credentials** | `aws sts get-caller-identity` to verify |
+| 💰 **Cost Concerns** | Use `./test-pipeline-simple.ps1` for dry run |
+| 🐛 **Pipeline Issues** | Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
 
 ### 📞 **Support**
-- 📚 Check the [GitLab Issues](https://gitlab.com/pdelpino/packer-ami-generator-v1/-/issues)
+- 📚 [GitLab Issues](https://gitlab.com/pdelpino/packer-ami-generator-v1/-/issues)
 - 📧 Review build logs in GitLab CI
-- 🧪 Use the testing script for diagnostics
+- 🧪 Use testing scripts for diagnostics
 
 ---
 
