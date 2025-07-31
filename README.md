@@ -332,6 +332,11 @@ aws iam rotate-access-key
 
 ## 🐛 Troubleshooting
 
+### 📚 **Troubleshooting Documentation**
+
+- 📖 **[Unicode Encoding Issues](docs/troubleshooting/unicode-encoding-gitlab-ci.md)** - Fix GitLab CI YAML syntax errors
+- 🔧 **[Common Pipeline Issues](docs/troubleshooting/)** - General troubleshooting guide
+
 ### ❌ **Common Issues**
 
 <details>
