@@ -1,81 +1,65 @@
 stages:
   - validate
-  - cost-estimate
   - build
-  - verify
-  - report
+  - deploy
 
-validate-packer:
+variables:
+  AWS_DEFAULT_REGION: "$AWS_REGION"
+  AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
+  AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
+  PACKER_VERSION: "1.10.0"
+
+validate_packer:
   stage: validate
   image: hashicorp/packer:latest
   tags:
     - homelab
     - local
-  before_script:
-    - echo "Setting up validation environment"
-    - packer version
   script:
-    - echo "Validating Packer template syntax"
-    - packer validate -var-file="variables.pkrvars.hcl" "packer.pkr.hcl"
-    - echo "Template validation completed successfully"
+    - echo "Validating Packer template..."
+    - packer init .
+    - packer validate -var-file="variables.pkrvars.hcl" ubuntu-24-04-lts.pkr.hcl
+    - echo "Packer template validation completed successfully"
+  only:
+    - main
+    - develop
 
-estimate-costs:
-  stage: cost-estimate
-  image: amazon/aws-cli:latest
-  tags:
-    - homelab
-    - local
-  script:
-    - echo "Instance Type: t3.small (~$0.02/hour)"
-    - echo "Estimated Build Time: 15-30 minutes"
-    - echo "Estimated Cost: $0.12 - $0.22"
-    - echo "Build estimation completed"
-
-build-ubuntu-ami:
+build_ami:
   stage: build
   image: hashicorp/packer:latest
   tags:
     - homelab
     - local
   timeout: 45m
-  before_script:
-    - echo "Starting AMI build process"
-    - echo "Build started at: $(date)"
   script:
-    - echo "Executing Packer build"
-    - packer build -var-file="variables.pkrvars.hcl" "packer.pkr.hcl"
+    - echo "Building AWS AMI with Packer..."
+    - packer init .
+    - packer build -var-file="variables.pkrvars.hcl" ubuntu-24-04-lts.pkr.hcl
     - echo "AMI build completed successfully"
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "web"'
-      when: manual
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      when: manual
+  artifacts:
+    reports:
+      dotenv: build.env
+    paths:
+      - packer-manifest.json
+    expire_in: 1 week
+  when: manual
+  only:
+    - main
+    - develop
 
-verify-ami-creation:
-  stage: verify
+deploy_verify:
+  stage: deploy
   image: amazon/aws-cli:latest
   tags:
     - homelab
     - local
-  dependencies:
-    - build-ubuntu-ami
   script:
-    - echo "Verifying AMI creation"
+    - echo "Verifying AMI deployment..."
+    - aws ec2 describe-images --owners self --region $AWS_DEFAULT_REGION --query 'Images[?starts_with(Name, `ubuntu-24-04-lts-prod`)].{Name:Name,ImageId:ImageId,CreationDate:CreationDate}' --output table
     - echo "AMI verification completed"
-
-generate-build-report:
-  stage: report
-  image: alpine:latest
-  tags:
-    - homelab
-    - local
   dependencies:
-    - build-ubuntu-ami
-    - verify-ami-creation
-  before_script:
-    - apk add --no-cache curl
-  script:
-    - echo "Generating build report"
-    - echo "Build Date: $(date)"
-    - echo "Build Status: SUCCESS"
-    - echo "Report generation completed"
+    - build_ami
+  when: manual
+  only:
+    - main
+    - develop
