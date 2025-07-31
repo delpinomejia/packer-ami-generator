@@ -3,20 +3,34 @@ stages:
   - test
   - deploy
 
+variables:
+  # Docker images
+  PACKER_IMAGE: "hashicorp/packer:latest"
+  AWS_CLI_IMAGE: "amazon/aws-cli:latest"
+
 build-job:
   stage: build
+  tags:
+    - homelab
+    - local
   script:
     - echo "Building project..."
     - echo "Build complete."
 
 unit-test-job:
   stage: test
+  tags:
+    - homelab
+    - local
   script:
     - echo "Running tests..."
     - echo "Tests completed."
 
 deploy-job:
   stage: deploy
+  tags:
+    - homelab
+    - local
   script:
     - echo "Deploying..."
     - echo "Deployment successful."
