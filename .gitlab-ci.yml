@@ -39,9 +39,6 @@ cost_estimate:
   tags:
     - homelab
     - local
-  before_script:
-    - apt update
-    - apt install -y bc
   script:
     - |
       echo "=== AWS AMI Build Cost Estimation ==="
@@ -62,9 +59,9 @@ cost_estimate:
         *)             HOURLY_COST="0.0416" ; echo "Unknown instance type, using t3.medium cost" ;;
       esac
       
-      # Calculate total estimated cost
-      BUILD_TIME_HOURS=$(echo "scale=4; $ESTIMATED_BUILD_TIME_MINUTES / 60" | bc)
-      TOTAL_COST=$(echo "scale=4; $HOURLY_COST * $BUILD_TIME_HOURS" | bc)
+      # Use awk for decimal calculations
+      BUILD_TIME_HOURS=$(awk "BEGIN {printf \"%.4f\", $ESTIMATED_BUILD_TIME_MINUTES / 60}")
+      TOTAL_COST=$(awk "BEGIN {printf \"%.4f\", $HOURLY_COST * $BUILD_TIME_HOURS}")
       
       echo "Estimated Hourly Cost: \$$HOURLY_COST USD"
       echo "Estimated Build Time: $ESTIMATED_BUILD_TIME_MINUTES minutes ($BUILD_TIME_HOURS hours)"
