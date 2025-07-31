@@ -36,12 +36,12 @@ validate_packer:
 
 cost_estimate:
   stage: cost-estimate
-  image: alpine:latest
   tags:
     - homelab
     - local
   before_script:
-    - apk add --no-cache bash bc
+    - apt-get update
+    - apt-get install -y bc
   script:
     - |
       echo "=== AWS AMI Build Cost Estimation ==="
