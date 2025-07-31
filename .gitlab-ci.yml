@@ -18,7 +18,7 @@ validate_packer:
   script:
     - echo "Validating Packer template..."
     - packer init .
-    - packer validate -var-file="variables.pkrvars.hcl" ubuntu-24-04-lts.pkr.hcl
+    - packer validate -var-file="variables.pkrvars.hcl" packer.pkr.hcl
     - echo "Packer template validation completed successfully"
   only:
     - main
@@ -34,7 +34,7 @@ build_ami:
   script:
     - echo "Building AWS AMI with Packer..."
     - packer init .
-    - packer build -var-file="variables.pkrvars.hcl" ubuntu-24-04-lts.pkr.hcl
+    - packer build -var-file="variables.pkrvars.hcl" packer.pkr.hcl
     - echo "AMI build completed successfully"
   artifacts:
     reports:
