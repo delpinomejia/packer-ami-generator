@@ -3,12 +3,12 @@
 
 name: 🎯 AMI Builder CI/CD
 
-# Trigger workflow on push to main branch or pull requests
+# Trigger workflow on push to master branch or pull requests
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
   pull_request:
-    branches: [ main ]
+    branches: [ master ]
   workflow_dispatch:  # Allow manual triggering
 
 env:
@@ -29,6 +29,12 @@ jobs:
       uses: hashicorp/setup-packer@main
       with:
         version: ${{ env.PACKER_VERSION }}
+    
+    - name: 🔧 Initialize Packer Plugins
+      run: |
+        echo "🔧 Initializing Packer plugins..."
+        packer init packer.pkr.hcl
+        echo "✅ Packer plugins initialized!"
     
     - name: ✅ Validate Packer Template
       run: |
@@ -98,7 +104,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: [validate, cost-estimate]
     environment: production  # Requires manual approval
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/main')
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'push' && github.ref == 'refs/heads/master')
     
     steps:
     - name: 📥 Checkout Repository
@@ -122,6 +128,12 @@ jobs:
       uses: hashicorp/setup-packer@main
       with:
         version: ${{ env.PACKER_VERSION }}
+    
+    - name: 🔧 Initialize Packer Plugins
+      run: |
+        echo "🔧 Initializing Packer plugins..."
+        packer init packer.pkr.hcl
+        echo "✅ Packer plugins initialized!"
     
     - name: 🔧 Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v4
