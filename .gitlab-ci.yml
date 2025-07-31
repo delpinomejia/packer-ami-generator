@@ -41,7 +41,7 @@ cost_estimate:
     - homelab
     - local
   before_script:
-    - apk add --no-cache bash bc grep
+    - apk add --no-cache bash bc
   script:
     - |
       echo "=== AWS AMI Build Cost Estimation ==="
@@ -72,15 +72,19 @@ cost_estimate:
       echo "AWS Region: $AWS_DEFAULT_REGION"
       echo "================================="
       
-      # Export for use in other jobs
-      printf "INSTANCE_TYPE=%s\n" "$INSTANCE_TYPE" > cost_estimate.env
-      printf "HOURLY_COST=%s\n" "$HOURLY_COST" >> cost_estimate.env
-      printf "TOTAL_COST=%s\n" "$TOTAL_COST" >> cost_estimate.env
-      echo "Created cost_estimate.env successfully:"
-      cat cost_estimate.env
+      # Export for use in other jobs - ensure file is created
+      echo "INSTANCE_TYPE=$INSTANCE_TYPE" > cost_estimate.env
+      echo "HOURLY_COST=$HOURLY_COST" >> cost_estimate.env
+      echo "TOTAL_COST=$TOTAL_COST" >> cost_estimate.env
+      
+      # Verify file exists and show contents
+      ls -la cost_estimate.env || echo "File not found!"
+      echo "File contents:"
+      cat cost_estimate.env || echo "Cannot read file!"
+      echo "File size: $(wc -c < cost_estimate.env) bytes"
   artifacts:
-    reports:
-      dotenv: cost_estimate.env
+    paths:
+      - cost_estimate.env
     expire_in: 1 hour
   only:
     - main
