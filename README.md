@@ -204,8 +204,13 @@ packer build -var-file="variables.pkrvars.hcl" packer.pkr.hcl | tee build.log
 
 ### 🧪 **Dry Run Testing**
 ```powershell
-# Test pipeline without AWS costs
+# Windows PowerShell - Test pipeline without AWS costs
 .\test-pipeline-simple.ps1
+```
+
+```bash
+# Linux/macOS Bash - Test pipeline without AWS costs
+./test-pipeline-simple.sh
 ```
 
 ### 📊 **Build Monitoring**
@@ -275,14 +280,21 @@ The build stage requires manual approval for cost control:
 
 ## 🧪 Testing
 
-### 🖥️ **Local Testing Script**
+### 🖥️ **Local Testing Scripts**
 
 ```powershell
-# Dynamic cost calculation based on your config
+# Windows PowerShell - Dynamic cost calculation based on your config
 .\test-pipeline-simple.ps1
 
 # Test specific stage
 .\test-pipeline-simple.ps1 -Stage validate
+```
+
+```bash
+# Linux/macOS Bash - Dynamic cost calculation based on your config
+./test-pipeline-simple.sh
+
+# Note: Bash version runs full pipeline simulation (no stage-specific options)
 ```
 
 ### 📋 **Test Coverage**
@@ -308,7 +320,8 @@ packer-ami-generator/
 │   └── 📜 playbook.yml         # Software provisioning
 ├── 📂 docs/
 │   └── 🐛 troubleshooting/      # Troubleshooting guides
-├── 🧪 test-pipeline-simple.ps1   # Local testing script
+├── 🧪 test-pipeline-simple.ps1   # Local testing script (Windows)
+├── 🧪 test-pipeline-simple.sh    # Local testing script (Linux/macOS)
 ├── 📚 README.md                 # This file
 └── 📄 .gitignore                # Version control exclusions
 ```
@@ -408,8 +421,9 @@ git clone https://github.com/YOUR-USERNAME/packer-ami-generator.git
 packer version  # Ensure Packer is installed
 aws --version   # Ensure AWS CLI is installed
 
-# Run tests
-./test-pipeline-simple.ps1
+# Run tests (choose based on your platform)
+./test-pipeline-simple.ps1    # Windows PowerShell
+./test-pipeline-simple.sh     # Linux/macOS Bash
 ```
 
 
