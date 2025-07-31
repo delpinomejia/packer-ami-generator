@@ -1,5 +1,6 @@
 stages:
   - validate
+  - cost-estimate
   - build
   - deploy
 
@@ -8,6 +9,15 @@ variables:
   AWS_ACCESS_KEY_ID: "$AWS_ACCESS_KEY_ID"
   AWS_SECRET_ACCESS_KEY: "$AWS_SECRET_ACCESS_KEY"
   PACKER_VERSION: "1.10.0"
+  # Cost estimation variables (USD per hour in us-east-1)
+  T3_NANO_COST: "0.0052"
+  T3_MICRO_COST: "0.0104"
+  T3_SMALL_COST: "0.0208"
+  T3_MEDIUM_COST: "0.0416"
+  T3_LARGE_COST: "0.0832"
+  T3_XLARGE_COST: "0.1664"
+  T3_2XLARGE_COST: "0.3328"
+  ESTIMATED_BUILD_TIME_MINUTES: "30"
 
 validate_packer:
   stage: validate
@@ -20,6 +30,57 @@ validate_packer:
     - packer init .
     - packer validate -var-file="variables.pkrvars.hcl" packer.pkr.hcl
     - echo "Packer template validation completed successfully"
+  only:
+    - main
+    - develop
+
+cost_estimate:
+  stage: cost-estimate
+  image: alpine:latest
+  tags:
+    - homelab
+    - local
+  before_script:
+    - apk add --no-cache bash bc grep
+  script:
+    - |
+      echo "=== AWS AMI Build Cost Estimation ==="
+      
+      # Read instance type from variables file
+      INSTANCE_TYPE=$(grep 'instance_type' variables.pkrvars.hcl | cut -d'"' -f2)
+      echo "Instance Type: $INSTANCE_TYPE"
+      
+      # Determine hourly cost based on instance type
+      case $INSTANCE_TYPE in
+        "t3.nano")    HOURLY_COST=$T3_NANO_COST ;;
+        "t3.micro")   HOURLY_COST=$T3_MICRO_COST ;;
+        "t3.small")   HOURLY_COST=$T3_SMALL_COST ;;
+        "t3.medium")  HOURLY_COST=$T3_MEDIUM_COST ;;
+        "t3.large")   HOURLY_COST=$T3_LARGE_COST ;;
+        "t3.xlarge")  HOURLY_COST=$T3_XLARGE_COST ;;
+        "t3.2xlarge") HOURLY_COST=$T3_2XLARGE_COST ;;
+        *)             HOURLY_COST="0.0416" ; echo "Unknown instance type, using t3.medium cost" ;;
+      esac
+      
+      # Calculate total estimated cost
+      BUILD_TIME_HOURS=$(echo "scale=4; $ESTIMATED_BUILD_TIME_MINUTES / 60" | bc)
+      TOTAL_COST=$(echo "scale=4; $HOURLY_COST * $BUILD_TIME_HOURS" | bc)
+      
+      echo "Estimated Hourly Cost: \$$HOURLY_COST USD"
+      echo "Estimated Build Time: $ESTIMATED_BUILD_TIME_MINUTES minutes ($BUILD_TIME_HOURS hours)"
+      echo "Total Estimated Cost: \$$TOTAL_COST USD"
+      echo "AWS Region: $AWS_DEFAULT_REGION"
+      echo "================================="
+      
+      # Export for use in other jobs
+      echo "INSTANCE_TYPE=$INSTANCE_TYPE" >> cost_estimate.env
+      echo "HOURLY_COST=$HOURLY_COST" >> cost_estimate.env
+      echo "TOTAL_COST=$TOTAL_COST" >> cost_estimate.env
+  artifacts:
+    reports:
+      dotenv: cost_estimate.env
+    expire_in: 1 hour
+  when: manual
   only:
     - main
     - develop

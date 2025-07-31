@@ -56,3 +56,12 @@ gitlab-task-template.md
 project-completion-summary.md
 *task-summary*.md
 *completion*.md
+
+# Test and pipeline dry run files (keep local only)
+test-pipeline-local.ps1
+test-pipeline-*.ps1
+dryrun-*.ps1
+*-dryrun.*
+*-test.*
+cost_estimate.env
+build.env
