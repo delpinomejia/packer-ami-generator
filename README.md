@@ -228,30 +228,63 @@ tail -f build.log | grep -E "(==>|\s+\w+:)"
 ```yaml
 # .github/workflows/ci.yml
 jobs:
-  - validate      # 🔍 Template validation
-  - cost-estimate # 💰 Cost calculation
-  - build         # 🏗️ AMI creation (manual approval)
-  - verify        # ✅ AMI verification
-  - report        # 📊 Build reporting
+  - validate       # 🔍 Template validation
+  - cost-estimate  # 💰 Cost calculation
+  - cost-approval  # 💰 Manual cost review (NEW!)
+  - build          # 🏗️ AMI creation
+  - verify         # ✅ AMI verification
+  - report         # 📊 Build reporting
 ```
 
 ### 📈 **Pipeline Features**
 
 | Stage | Duration | Purpose |
-|-------|----------|----------|
+|-------|----------|---------|
 | 🔍 **Validate** | ~30s | Template syntax check |
 | 💰 **Cost Estimate** | ~10s | Build cost prediction |
-| 🏗️ **Build** | 15-30min | AMI creation (manual approval required) |
+| 💰 **Cost Approval** | Manual | **Cost review & approval** |
+| 🏗️ **Build** | 15-30min | AMI creation (after approval) |
 | ✅ **Verify** | ~30s | AMI availability check |
 | 📊 **Report** | ~10s | Comprehensive build report |
 
-### 🎮 **Manual Approval & Triggers**
-The build stage requires manual approval for cost control:
-1. Navigate to **Actions** tab in GitHub
-2. Select the workflow run
-3. Click **Review deployments** for production environment
-4. **Approve** the deployment to proceed with AMI build
-5. Monitor progress in real-time
+### 🎮 **Cost-Controlled Build Process**
+
+#### **Step 1: Automatic Cost Estimation**
+The workflow automatically calculates estimated costs based on your configuration:
+```
+💰 COST ESTIMATE REVIEW
+═══════════════════════
+💵 Estimated Build Cost: $0.17
+📦 Instance Type: t3.small
+⏱️  Estimated Duration: ~25 minutes
+🌐 Region: us-east-1
+```
+
+#### **Step 2: Manual Cost Approval** 🔄
+**🚨 IMPORTANT: Two-Stage Approval Process**
+
+1. **Navigate to Actions Tab**
+   - Go to: https://github.com/[your-username]/packer-ami-generator/actions
+   - Click on the running workflow
+
+2. **First Approval: Cost Review**
+   - Look for **"💰 Cost Approval"** environment
+   - Click **"Review deployments"**
+   - Review the displayed cost estimate
+   - Click **"Approve and deploy"** if cost is acceptable
+   - Or **"Reject"** to cancel and avoid charges
+
+3. **Second Approval: Production Build**
+   - After cost approval, **"🏗️ Build AMI"** will appear
+   - Click **"Review deployments"** again
+   - Click **"Approve and deploy"** to start the actual AMI build
+   - Monitor the build progress in real-time
+
+#### **Step 3: Build Monitoring**
+- 📊 Real-time logs show build progress
+- 💰 Actual costs are tracked and reported
+- ✅ AMI verification confirms successful creation
+- 📋 Comprehensive report generated with all details
 
 ---
 
