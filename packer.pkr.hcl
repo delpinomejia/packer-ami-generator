@@ -35,6 +35,18 @@ variable "ami_name_prefix" {
   default     = "ubuntu-custom"
 }
 
+variable "ami_version" {
+  description = "Version number for the AMI (e.g., v1.0, v2.1)"
+  type        = string
+  default     = "v1.0"
+}
+
+variable "ubuntu_version" {
+  description = "Ubuntu version to use (e.g., 24.04, 22.04, 20.04)"
+  type        = string
+  default     = "24.04"
+}
+
 variable "root_volume_size" {
   description = "Size of the root EBS volume in GB"
   type        = number
@@ -70,7 +82,6 @@ variable "additional_packages" {
     "software-properties-common",
     "python3",
     "python3-pip",
-    "awscli",
     "nginx"
   ]
 }
@@ -99,8 +110,13 @@ data "amazon-ami" "ubuntu" {
 
 # Local values for computed fields
 locals {
-  timestamp    = formatdate("YYYY-MM-DD-hhmm", timestamp())
-  ami_name     = "${var.ami_name_prefix}-${local.timestamp}"
+  # Enhanced timestamp format: YYYY-MM-DD-HHMM (24-hour format)
+  timestamp    = formatdate("YYYY-MM-DD-HHMM", timestamp())
+  # Comprehensive AMI name: prefix-ubuntu-version-ami-version-timestamp
+  # Example: ubuntu-custom-24.04-v1.0-2025-01-31-0135
+  ami_name     = "${var.ami_name_prefix}-${var.ubuntu_version}-${var.ami_version}-${local.timestamp}"
+  
+  # Docker configuration
   docker_gpg   = "https://download.docker.com/linux/ubuntu/gpg"
   docker_repo  = "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
 
@@ -235,7 +251,6 @@ build {
       
       "sudo truncate -s 0 /var/log/*log",
       
-      "history -c",
       "cat /dev/null > ~/.bash_history",
       
       "echo '✅ System cleanup completed successfully'",

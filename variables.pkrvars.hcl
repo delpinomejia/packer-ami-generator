@@ -6,16 +6,20 @@
 
 # AWS Configuration
 aws_region           = "us-east-1"     # Change to your preferred AWS region
-aws_access_key_id    = ""              # Your AWS Access Key ID (or use environment variable AWS_ACCESS_KEY_ID)
-aws_secret_access_key = ""             # Your AWS Secret Access Key (or use environment variable AWS_SECRET_ACCESS_KEY)
+# aws_access_key_id    = null          # Use environment variable AWS_ACCESS_KEY_ID
+# aws_secret_access_key = null         # Use environment variable AWS_SECRET_ACCESS_KEY
 
 # EC2 Instance Configuration
-instance_type = "t3.medium"  # Instance type for building the AMI
+instance_type = "t3.small"   # Instance type for building the AMI (cost-optimized)
 
 # AMI Configuration
-ami_name_prefix    = "ubuntu-custom"  # Prefix for your AMI name
-root_volume_size   = 20               # Root volume size in GB
-ssh_username       = "ubuntu"         # SSH username (typically 'ubuntu' for Ubuntu AMIs)
+# Final AMI name format: {prefix}-{ubuntu_version}-{ami_version}-{timestamp}
+# Example: ubuntu-custom-24.04-v1.0-2025-01-31-0135
+ami_name_prefix    = "ubuntu-custom"     # Prefix for your AMI name
+ami_version        = "v1.0"              # AMI version (e.g., v1.0, v2.1)
+ubuntu_version     = "24.04"             # Ubuntu version (e.g., 24.04, 22.04, 20.04)
+root_volume_size   = 20                  # Root volume size in GB
+ssh_username       = "ubuntu"            # SSH username (typically 'ubuntu' for Ubuntu AMIs)
 
 # Package Configuration - Customize these lists as needed
 essential_packages = [
@@ -34,7 +38,6 @@ additional_packages = [
   "software-properties-common",
   "python3",
   "python3-pip",
-  "awscli",
   "nginx"
 ]
 

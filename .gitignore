@@ -50,3 +50,9 @@ Thumbs.db
 # Backup files
 *.bak
 *.backup
+
+# Local documentation and task templates (keep local only)
+gitlab-task-template.md
+project-completion-summary.md
+*task-summary*.md
+*completion*.md
