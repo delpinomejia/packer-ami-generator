@@ -1,4 +1,4 @@
-# 🎯 Production-Ready Ubuntu 24.04 LTS AMI Builder
+# 🎯 Production-Ready Ubuntu AMI Builder
 
 <div align="center">
 
