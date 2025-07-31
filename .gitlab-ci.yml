@@ -40,8 +40,8 @@ cost_estimate:
     - homelab
     - local
   before_script:
-    - sudo apt-get update
-    - sudo apt-get install -y bc
+    - apt update
+    - apt install -y bc
   script:
     - |
       echo "=== AWS AMI Build Cost Estimation ==="
