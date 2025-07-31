@@ -6,11 +6,14 @@ This directory contains comprehensive troubleshooting documentation for the AWS 
 
 ### 🔧 **Critical Issues**
 - **[Unicode Encoding Issues](unicode-encoding-gitlab-ci.md)** - Fix GitLab CI YAML syntax errors caused by Windows encoding issues
+- **YAML Validation** - Use yamllint.com and other validators to catch syntax errors
+- **before_script Configuration** - Resolve GitLab CI array format requirements
 
 ### 🏗️ **Pipeline Issues**
 - **Build Failures** - Common Packer build problems and solutions
 - **AWS Credential Issues** - Authentication and permission problems
 - **Cost Management** - Unexpected charges and optimization tips
+- **Indentation Errors** - YAML formatting and structure issues
 
 ### 🛠️ **General Issues**
 - **Local Development** - Setting up and testing locally

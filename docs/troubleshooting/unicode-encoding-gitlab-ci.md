@@ -128,6 +128,23 @@ python -c "import yaml; yaml.safe_load(open('.gitlab-ci.yml', 'r'))"
 # Or use online validators for quick checks
 ```
 
+### 5. Online YAML Validation (Recommended)
+For comprehensive validation without local tools:
+
+**yamllint.com** - The most reliable online YAML validator:
+1. Visit: https://www.yamllint.com/
+2. Copy your entire `.gitlab-ci.yml` content
+3. Paste it into the text area
+4. Click "Go" to validate
+5. Review any errors with specific line numbers
+
+**PowerShell helper to copy content:**
+```powershell
+# Copy YAML content to clipboard for online validation
+Get-Content .gitlab-ci.yml -Raw | Set-Clipboard
+Write-Host "YAML content copied to clipboard - paste into yamllint.com" -ForegroundColor Green
+```
+
 ## Emergency Quick Fix
 
 If you need an immediate fix for a failing pipeline:
@@ -163,8 +180,9 @@ curl --header "PRIVATE-TOKEN: your-token" \
      "https://gitlab.com/api/v4/ci/lint"
 ```
 
-## Real-World Example
+## Real-World Examples
 
+### Example 1: Unicode Escape Sequences
 In our project, the issue manifested as:
 ```yaml
 # Problematic line (line 143)
@@ -175,6 +193,40 @@ In our project, the issue manifested as:
 ```
 
 The `\u003e` Unicode escape sequence was preventing proper shell redirection, causing the entire pipeline to fail with a YAML parsing error.
+
+### Example 2: before_script Configuration Errors
+Another common issue encountered:
+```yaml
+# Problematic configuration - improper nested format
+before_script:
+    - >
+      echo "Starting process";
+      echo "Setting variables";
+
+# Fixed configuration - simple array format
+before_script:
+    - echo "Starting process"
+    - echo "Setting variables"
+```
+
+Error: `before_script config should be a string or a nested array of strings up to 10 levels deep`
+
+### Example 3: Indentation Issues
+```yaml
+# Problematic - inconsistent indentation
+build-ami:
+  stage: build
+  timeout: 45m
+before_script:  # Wrong indentation level
+    - echo "test"
+
+# Fixed - consistent 2-space indentation
+build-ami:
+  stage: build
+  timeout: 45m
+  before_script:
+    - echo "test"
+```
 
 ## Additional Resources
 
