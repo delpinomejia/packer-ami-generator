@@ -45,12 +45,12 @@ cost-estimation:
   before_script:
     - echo "Calculating estimated build costs"
   script:
-    - echo "Instance Type: t3.small (~\$0.0208/hour)"
+    - echo "Instance Type: t3.small (~$0.0208/hour)"
     - echo "Estimated Build Time: 15-30 minutes"
-    - echo "Estimated Instance Cost: \$0.11 - \$0.21"
-    - echo "EBS Storage Cost: ~\$0.01"
+    - echo "Estimated Instance Cost: $0.11 - $0.21"
+    - echo "EBS Storage Cost: ~$0.01"
     - echo "Data Transfer Cost: Minimal"
-    - echo "TOTAL ESTIMATED COST: \$0.12 - \$0.22"
+    - echo "TOTAL ESTIMATED COST: $0.12 - $0.22"
     - echo "Actual costs may vary based on build duration and AWS pricing"
   artifacts:
     reports:
@@ -130,6 +130,21 @@ generate-report:
     - echo "AMI ID: $AMI_ID"
     - echo "Region: $AWS_DEFAULT_REGION"
     - echo "Build Date: $(date)"
+    - echo "Creating detailed report file"
+    - |
+      cat > build-report.txt << EOF
+      ===============================
+      AWS AMI BUILD REPORT
+      ===============================
+      Build Date: $(date)
+      AMI ID: $AMI_ID
+      Region: $AWS_DEFAULT_REGION
+      Ubuntu Version: $UBUNTU_VERSION
+      AMI Name Prefix: $AMI_NAME_PREFIX
+      Build Status: SUCCESS
+      ===============================
+      EOF
+    - cat build-report.txt
   artifacts:
     reports:
       junit: build-report.xml
