@@ -284,7 +284,9 @@ jobs:
         EOF
         
         if [ -f artifacts/cost-estimate/cost_estimate.env ]; then
-          source artifacts/cost-estimate/cost_estimate.env
+          # Safely read cost estimate variables
+          ESTIMATED_COST=$(grep '^ESTIMATED_COST=' artifacts/cost-estimate/cost_estimate.env | cut -d'=' -f2 | tr -d '"')
+          INSTANCE_TYPE=$(grep '^INSTANCE_TYPE=' artifacts/cost-estimate/cost_estimate.env | cut -d'=' -f2 | tr -d '"')
           echo "- **Estimated Cost:** \$$ESTIMATED_COST" >> "$REPORT_FILE"
           echo "- **Instance Type:** $INSTANCE_TYPE" >> "$REPORT_FILE"
         fi
@@ -293,7 +295,9 @@ jobs:
         echo "## 🏗️ Build Details" >> "$REPORT_FILE"
         
         if [ -f artifacts/build-info/build_info.env ]; then
-          source artifacts/build-info/build_info.env
+          # Safely read build info variables
+          BUILD_STATUS=$(grep '^BUILD_STATUS=' artifacts/build-info/build_info.env | cut -d'=' -f2 | tr -d '"')
+          BUILD_TIMESTAMP=$(grep '^BUILD_TIMESTAMP=' artifacts/build-info/build_info.env | cut -d'=' -f2 | tr -d '"')
           echo "- **Build Status:** $BUILD_STATUS" >> "$REPORT_FILE"
           echo "- **Build Completed:** $BUILD_TIMESTAMP" >> "$REPORT_FILE"
         fi
