@@ -45,7 +45,6 @@ variables:
   
   # Build configuration
   AMI_NAME_PREFIX: "ubuntu-24-04-custom"
-  BUILD_TIMESTAMP: $(date +%Y%m%d-%H%M%S)
 
 # =====================================================
 # Stage 1: Validate Configuration
