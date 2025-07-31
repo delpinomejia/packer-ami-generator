@@ -5,7 +5,7 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-24.04_LTS-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)
 ![Packer](https://img.shields.io/badge/Packer-Latest-1DAEFF?style=for-the-badge&logo=packer&logoColor=white)
 ![AWS](https://img.shields.io/badge/AWS-EC2-FF9900?style=for-the-badge&logo=amazon-aws&logoColor=white)
-![GitLab CI](https://img.shields.io/badge/GitLab_CI-CD-FCA326?style=for-the-badge&logo=gitlab&logoColor=white)
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-CD-2088FF?style=for-the-badge&logo=github-actions&logoColor=white)
 ![Docker](https://img.shields.io/badge/Docker-Ready-2496ED?style=for-the-badge&logo=docker&logoColor=white)
 ![Security](https://img.shields.io/badge/Security-ClamAV-FF6B6B?style=for-the-badge&logo=shield&logoColor=white)
 
@@ -45,7 +45,7 @@
 
 ### 🚀 **Professional Features**
 - 📊 **Cost Optimization** - t3.small instance (only $0.12-$0.22 per build)
-- 🔄 **GitLab CI/CD** - Fully automated pipeline
+- 🔄 **GitHub Actions** - Fully automated pipeline
 - 🧪 **Local Testing** - Dry-run capabilities
 - 📈 **Build Reporting** - Comprehensive logs and metrics
 - ⚙️ **Configurable** - Flexible variable system
@@ -93,8 +93,8 @@ graph TB
 
 ### 1️⃣ **Clone Repository**
 ```bash
-git clone ssh://git@gitlab.com/pdelpino/packer-ami-generator-v1.git
-cd packer-ami-generator-v1
+git clone https://github.com/delpinomejia/packer-ami-generator.git
+cd packer-ami-generator
 ```
 
 ### 2️⃣ **Install Prerequisites**
@@ -351,7 +351,7 @@ aws iam rotate-access-key
 | 🐛 **Pipeline Issues** | Check [TROUBLESHOOTING.md](TROUBLESHOOTING.md) |
 
 ### 📞 **Support**
-- 📚 [GitLab Issues](https://gitlab.com/pdelpino/packer-ami-generator-v1/-/issues)
+- 📚 [GitHub Issues](https://github.com/delpinomejia/packer-ami-generator/issues)
 - 📧 Review build logs in GitLab CI
 - 🧪 Use testing scripts for diagnostics
 
@@ -363,7 +363,7 @@ This project was developed through collaborative effort:
 
 ### 🏗️ **Core Development Team**
 
-**[@pdelpino](https://gitlab.com/pdelpino)** - *Project Lead & Architecture*
+**[@delpinomejia](https://github.com/delpinomejia)** - *Project Lead & Architecture*
 - 🎯 Project vision and requirements
 - 🏗️ Infrastructure architecture design
 - 🔧 AWS deployment and validation
@@ -397,7 +397,7 @@ This project was developed through collaborative effort:
 ### 📋 **Development Setup**
 ```bash
 # Clone your fork
-git clone https://gitlab.com/YOUR-USERNAME/packer-ami-generator-v1.git
+git clone https://github.com/YOUR-USERNAME/packer-ami-generator.git
 
 # Install development dependencies
 packer version  # Ensure Packer is installed

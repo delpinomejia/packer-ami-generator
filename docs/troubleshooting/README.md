@@ -28,7 +28,7 @@ This directory contains comprehensive troubleshooting documentation for the AWS 
 3. **High Build Costs** → Review instance type configuration and build frequency
 
 ### Getting Support
-- 📋 Check existing [GitLab Issues](https://gitlab.com/pdelpino/packer-ami-generator-v1/-/issues)
+- 📋 Check existing [GitHub Issues](https://github.com/delpinomejia/packer-ami-generator/issues)
 - 🧪 Run the testing script: `./test-pipeline-simple.ps1`
 - 📊 Review build logs in GitLab CI/CD interface
 
