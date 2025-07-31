@@ -73,9 +73,11 @@ cost_estimate:
       echo "================================="
       
       # Export for use in other jobs
-      echo "INSTANCE_TYPE=$INSTANCE_TYPE" >> cost_estimate.env
-      echo "HOURLY_COST=$HOURLY_COST" >> cost_estimate.env
-      echo "TOTAL_COST=$TOTAL_COST" >> cost_estimate.env
+      printf "INSTANCE_TYPE=%s\n" "$INSTANCE_TYPE" > cost_estimate.env
+      printf "HOURLY_COST=%s\n" "$HOURLY_COST" >> cost_estimate.env
+      printf "TOTAL_COST=%s\n" "$TOTAL_COST" >> cost_estimate.env
+      echo "Created cost_estimate.env successfully:"
+      cat cost_estimate.env
   artifacts:
     reports:
       dotenv: cost_estimate.env
