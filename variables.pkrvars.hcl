@@ -18,7 +18,7 @@ instance_type = "t3.small"   # Instance type for building the AMI (cost-optimize
 ami_name_prefix    = "ubuntu-custom"     # Prefix for your AMI name
 ami_version        = "v1.0"              # AMI version (e.g., v1.0, v2.1)
 ubuntu_version     = "24.04"             # Ubuntu version (e.g., 24.04, 22.04, 20.04)
-root_volume_size   = 20                  # Root volume size in GB
+root_volume_size   = 8                   # Root volume size in GB
 ssh_username       = "ubuntu"            # SSH username (typically 'ubuntu' for Ubuntu AMIs)
 
 # Package Configuration - Customize these lists as needed

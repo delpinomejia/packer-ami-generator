@@ -50,7 +50,7 @@ variable "ubuntu_version" {
 variable "root_volume_size" {
   description = "Size of the root EBS volume in GB"
   type        = number
-  default     = 20
+  default     = 8
 }
 
 variable "ssh_username" {

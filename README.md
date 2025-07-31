@@ -148,7 +148,7 @@ instance_type = "t3.small"  # ~$0.0208/hour
 
 # AMI Configuration
 ami_name_prefix = "ubuntu-custom"
-root_volume_size = 20
+root_volume_size = 8  # Root volume size in GB (configurable: 8-100+)
 
 # Software Packages
 essential_packages = ["curl", "clamav", "vim", "git"]

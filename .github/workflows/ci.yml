@@ -120,8 +120,10 @@ jobs:
         echo "💰 COST ESTIMATE REVIEW"
         echo "═══════════════════════"
         if [ -f cost_estimate.env ]; then
-          source cost_estimate.env
-          echo "💵 Estimated Build Cost: $ESTIMATED_COST"
+          # Safely read cost estimate variables
+          ESTIMATED_COST=$(grep '^ESTIMATED_COST=' cost_estimate.env | cut -d'=' -f2 | tr -d '"')
+          INSTANCE_TYPE=$(grep '^INSTANCE_TYPE=' cost_estimate.env | cut -d'=' -f2 | tr -d '"')
+          echo "💵 Estimated Build Cost: \$$ESTIMATED_COST"
           echo "📦 Instance Type: $INSTANCE_TYPE"
           echo "⏱️  Estimated Duration: ~25 minutes"
           echo "🌐 Region: ${{ env.AWS_REGION }}"
@@ -156,7 +158,9 @@ jobs:
       run: |
         echo "🏗️ Starting AMI build process..."
         if [ -f cost_estimate.env ]; then
-          source cost_estimate.env
+          # Safely read cost estimate variables
+          ESTIMATED_COST=$(grep '^ESTIMATED_COST=' cost_estimate.env | cut -d'=' -f2 | tr -d '"')
+          INSTANCE_TYPE=$(grep '^INSTANCE_TYPE=' cost_estimate.env | cut -d'=' -f2 | tr -d '"')
           echo "💰 Estimated build cost: \$$ESTIMATED_COST"
           echo "📦 Instance type: $INSTANCE_TYPE"
         fi
