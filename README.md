@@ -218,15 +218,15 @@ tail -f build.log | grep -E "(==>|\s+\w+:)"
 
 ## 🔄 CI/CD Pipeline
 
-### 🚀 **GitLab CI Pipeline Stages**
+### 🚀 **GitHub Actions Workflow Stages**
 
 ```yaml
-# .gitlab-ci.yml
-stages:
-  - validate      # ✅ Template validation
+# .github/workflows/ci.yml
+jobs:
+  - validate      # 🔍 Template validation
   - cost-estimate # 💰 Cost calculation
-  - build         # 🏗️ AMI creation (manual)
-  - verify        # 🔍 AMI verification
+  - build         # 🏗️ AMI creation (manual approval)
+  - verify        # ✅ AMI verification
   - report        # 📊 Build reporting
 ```
 
@@ -236,15 +236,17 @@ stages:
 |-------|----------|----------|
 | 🔍 **Validate** | ~30s | Template syntax check |
 | 💰 **Cost Estimate** | ~10s | Build cost prediction |
-| 🏗️ **Build** | 15-30min | AMI creation (manual trigger) |
+| 🏗️ **Build** | 15-30min | AMI creation (manual approval required) |
 | ✅ **Verify** | ~30s | AMI availability check |
 | 📊 **Report** | ~10s | Comprehensive build report |
 
-### 🎮 **Manual Triggers**
+### 🎮 **Manual Approval & Triggers**
 The build stage requires manual approval for cost control:
-1. Navigate to **CI/CD > Pipelines** in GitLab
-2. Click ▶️ **Manual** on the build stage
-3. Monitor progress in real-time
+1. Navigate to **Actions** tab in GitHub
+2. Select the workflow run
+3. Click **Review deployments** for production environment
+4. **Approve** the deployment to proceed with AMI build
+5. Monitor progress in real-time
 
 ---
 
@@ -296,16 +298,19 @@ The build stage requires manual approval for cost control:
 ## 📁 Project Structure
 
 ```
-packer-ami-generator-v1/
-├── 📄 packer.pkr.hcl           # Main Packer template
-├── ⚙️  variables.pkrvars.hcl    # Configuration variables
-├── 🔄 .gitlab-ci.yml           # CI/CD pipeline
+packer-ami-generator/
+├── 📄 packer.pkr.hcl              # Main Packer template
+├── ⚙️  variables.pkrvars.hcl       # Configuration variables
+├── 📂 .github/
+│   └── 🏗️ workflows/
+│       └── 🔄 ci.yml            # GitHub Actions pipeline
 ├── 📂 ansible/
 │   └── 📜 playbook.yml         # Software provisioning
-├── 🧪 test-pipeline-simple.ps1 # Local testing script
-├── 📊 gitlab-task-template.md  # Project documentation
-├── 📚 README.md               # This file
-└── 📄 .gitignore              # Version control exclusions
+├── 📂 docs/
+│   └── 🐛 troubleshooting/      # Troubleshooting guides
+├── 🧪 test-pipeline-simple.ps1   # Local testing script
+├── 📚 README.md                 # This file
+└── 📄 .gitignore                # Version control exclusions
 ```
 
 ---
@@ -369,7 +374,7 @@ This project was developed through collaborative effort:
 - 🔧 AWS deployment and validation
 - 📊 Cost optimization strategy
 
-**Igor (AI Assistant)** - *Technical Implementation & Documentation*
+**Igor The Student (AI Assistant)** - *Technical Implementation  Documentation*
 - 💻 Packer template development and optimization
 - 🔄 GitLab CI/CD pipeline design and implementation
 - 📚 Comprehensive documentation and visual guides
