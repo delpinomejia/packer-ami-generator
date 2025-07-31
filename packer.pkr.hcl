@@ -1,4 +1,4 @@
-# =====================================================
+﻿# =====================================================
 # Ubuntu 24.04 LTS AMI Builder with Essential Packages
 # =====================================================
 
@@ -170,9 +170,9 @@ build {
   # Wait for cloud-init to complete
   provisioner "shell" {
     inline = [
-      "echo '🔄 Waiting for cloud-init to complete...'",
+      "echo 'ðŸ”„ Waiting for cloud-init to complete...'",
       "sudo cloud-init status --wait",
-      "echo '✅ Cloud-init completed successfully'"
+      "echo 'âœ… Cloud-init completed successfully'"
     ]
   }
 
@@ -180,16 +180,16 @@ build {
   provisioner "shell" {
     environment_vars = ["DEBIAN_FRONTEND=noninteractive"]
     inline = [
-      "echo '🔄 Starting system update and package installation...'",
+      "echo 'ðŸ”„ Starting system update and package installation...'",
       
       "sudo apt-get clean",
       "sudo apt-get update -y",
       "sudo apt-get upgrade -y",
       
-      "echo '📦 Installing essential packages...'",
+      "echo 'ðŸ“¦ Installing essential packages...'",
       "sudo apt-get install -y ${join(" ", var.essential_packages)}",
       "sudo apt-get install -y ${join(" ", var.additional_packages)}",
-      "echo '✅ Essential packages installed successfully'"
+      "echo 'âœ… Essential packages installed successfully'"
     ]
   }
 
@@ -197,7 +197,7 @@ build {
   provisioner "shell" {
     environment_vars = ["DEBIAN_FRONTEND=noninteractive"]
     inline = [
-      "echo '🐳 Installing Docker...'",
+      "echo 'ðŸ³ Installing Docker...'",
       
       "curl -fsSL ${local.docker_gpg} | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg",
       
@@ -209,38 +209,38 @@ build {
       "sudo usermod -aG docker ${var.ssh_username}",
       "sudo systemctl enable docker",
       "sudo systemctl start docker",
-      "echo '✅ Docker installed and configured successfully'"
+      "echo 'âœ… Docker installed and configured successfully'"
     ]
   }
 
   # ClamAV configuration
   provisioner "shell" {
     inline = [
-      "echo '🛡️ Configuring ClamAV...'",
+      "echo 'ðŸ›¡ï¸ Configuring ClamAV...'",
       "sudo systemctl enable clamav-freshclam",
       "sudo systemctl start clamav-freshclam",
-      "echo '✅ ClamAV configured successfully'"
+      "echo 'âœ… ClamAV configured successfully'"
     ]
   }
 
   # Web server setup
   provisioner "shell" {
     inline = [
-      "echo '🌐 Setting up web server...'",
+      "echo 'ðŸŒ Setting up web server...'",
       "sudo systemctl enable nginx",
       "sudo systemctl start nginx",
       
-      "echo '<h1>🚀 Custom Ubuntu AMI</h1>' | sudo tee /var/www/html/index.html > /dev/null",
+      "echo '<h1>ðŸš€ Custom Ubuntu AMI</h1>' | sudo tee /var/www/html/index.html > /dev/null",
       "echo '<p>Built with Packer on <strong>'$(date)'</strong></p>' | sudo tee -a /var/www/html/index.html > /dev/null",
       "echo '<p>Includes: ${join(", ", concat(var.essential_packages, var.additional_packages))}</p>' | sudo tee -a /var/www/html/index.html > /dev/null",
-      "echo '✅ Web server configured successfully'"
+      "echo 'âœ… Web server configured successfully'"
     ]
   }
 
   # System optimization and cleanup
   provisioner "shell" {
     inline = [
-      "echo '🧹 Running system cleanup and optimization...'",
+      "echo 'ðŸ§¹ Running system cleanup and optimization...'",
       
       "sudo apt-get autoremove -y",
       "sudo apt-get autoclean",
@@ -253,8 +253,9 @@ build {
       
       "cat /dev/null > ~/.bash_history",
       
-      "echo '✅ System cleanup completed successfully'",
-      "echo '🎉 AMI build process completed! AMI name: ${local.ami_name}'"
+      "echo 'âœ… System cleanup completed successfully'",
+      "echo 'ðŸŽ‰ AMI build process completed! AMI name: ${local.ami_name}'"
     ]
   }
 }
+

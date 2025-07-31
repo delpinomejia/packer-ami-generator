@@ -80,7 +80,6 @@ cost_estimate:
     reports:
       dotenv: cost_estimate.env
     expire_in: 1 hour
-  when: manual
   only:
     - main
     - develop
@@ -103,7 +102,6 @@ build_ami:
     paths:
       - packer-manifest.json
     expire_in: 1 week
-  when: manual
   only:
     - main
     - develop
@@ -120,7 +118,6 @@ deploy_verify:
     - echo "AMI verification completed"
   dependencies:
     - build_ami
-  when: manual
   only:
     - main
     - develop
