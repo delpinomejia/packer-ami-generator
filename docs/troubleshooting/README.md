@@ -6,7 +6,6 @@ This directory contains comprehensive troubleshooting documentation for the AWS 
 
 ### 🔧 **Critical Issues**
 - **[Unicode Encoding Issues](unicode-encoding-gitlab-ci.md)** - Fix GitLab CI YAML syntax errors caused by Windows encoding issues
-- **[Sample GitLab CI File](sample-gitlab-ci.yml)** - Clean, basic template to start from when facing encoding issues
 
 ### 🏗️ **Pipeline Issues**
 - **Build Failures** - Common Packer build problems and solutions
