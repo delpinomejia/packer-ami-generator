@@ -57,7 +57,8 @@ validate-configuration:
     - docker
   before_script:
     - echo "🔧 Setting up validation environment..."
-    - echo "Packer version:" && packer version
+    - echo "Packer version:"
+    - packer version
     - echo "AWS Region: $AWS_DEFAULT_REGION"
     - echo "Template: $PACKER_TEMPLATE"
     - echo "Variables: $PACKER_CONFIG_FILE"

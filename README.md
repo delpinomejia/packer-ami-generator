@@ -382,6 +382,34 @@ aws iam get-user
 
 ---
 
+## 👥 Contributors
+
+This project was developed through collaborative effort:
+
+### 🏗️ **Core Development Team**
+
+**[@pdelpino](https://gitlab.com/pdelpino)** - *Project Lead & Architecture*
+- 🎯 Project vision and requirements
+- 🏗️ Infrastructure architecture design
+- 🔧 AWS deployment and validation
+- 📊 Cost optimization strategy
+
+**Igor (AI Assistant)** - *Technical Implementation & Documentation*
+- 💻 Packer template development and optimization
+- 🔄 GitLab CI/CD pipeline design and implementation
+- 📚 Comprehensive documentation and visual guides
+- 🧪 Testing framework and validation scripts
+- 🏷️ Enhanced AMI naming and versioning system
+- 💰 Cost analysis and optimization (48% reduction achieved)
+
+### 🌟 **Special Recognition**
+- **Real AWS Deployment:** Successfully validated with production AMI build
+- **Cost Achievement:** Reduced build costs from $0.22-$0.43 to $0.12-$0.22
+- **Documentation Excellence:** Enterprise-grade README with visual elements
+- **Professional Quality:** Production-ready code with comprehensive comments
+
+---
+
 ## 🤝 Contributing
 
 ### 🎯 **How to Contribute**
