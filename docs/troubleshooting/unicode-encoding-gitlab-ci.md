@@ -56,8 +56,33 @@ git diff .gitlab-ci.yml
 
 ## Solution Strategies
 
-### Strategy 1: File Recreation (Recommended)
-This is the most reliable method for severe encoding issues:
+### Strategy 1: Revert to Basic Configuration (Most Reliable)
+When dealing with persistent encoding issues, start with a minimal working configuration:
+
+You can start by using our [Sample GitLab CI File](sample-gitlab-ci.yml) as a reference. This basic template ensures no encoding issues and provides a clean slate for further enhancements.
+
+```bash
+# Steps to revert back to basics
+
+# 1. Remove the problematic file
+git rm .gitlab-ci.yml
+git commit -m "Remove problematic GitLab CI file"
+git push origin main
+
+# 2. Use the sample GitLab CI template
+# This ensures clean UTF-8 encoding from the start
+cp docs/troubleshooting/sample-gitlab-ci.yml .gitlab-ci.yml
+
+# 3. Commit and push the sample
+git add .gitlab-ci.yml
+git commit -m "Setup a clean GitLab CI sample"
+git push origin main
+
+# 4. Gradually add complexity using edit tools instead of full replacements
+```
+
+### Strategy 2: File Recreation (Traditional Method)
+This method works for isolated encoding issues:
 
 ```bash
 # 1. Backup the problematic file
@@ -175,6 +200,39 @@ In our project, the issue manifested as:
 ```
 
 The `\u003e` Unicode escape sequence was preventing proper shell redirection, causing the entire pipeline to fail with a YAML parsing error.
+
+## ✅ Success Story: Complete Resolution
+
+**Date**: January 31, 2025  
+**Project**: AWS AMI Builder with Packer  
+**Issue Duration**: Multiple attempts over several hours  
+**Final Resolution**: Strategy 1 (Revert to Basic Configuration)
+
+### What Worked:
+1. **Deleted the problematic file completely** using `git rm .gitlab-ci.yml`
+2. **Created a basic GitLab CI template** via GitLab's web interface
+3. **Pulled the clean template** to local repository
+4. **Simplified the pipeline** to basic functionality without complex redirects
+5. **Verified no Unicode escape sequences** using PowerShell validation
+6. **Successfully pushed and deployed** - pipeline runs without errors
+
+### Key Learnings:
+- **Windows encoding persistence**: Even after multiple edit attempts, Unicode characters persisted
+- **Edit tool limitations**: Traditional find-and-replace couldn't resolve deep encoding issues
+- **GitLab web interface reliability**: Creating files through GitLab's interface ensures clean UTF-8
+- **Simplification effectiveness**: Basic configuration eliminated all encoding variables
+- **Progressive complexity**: Start simple, then gradually add features
+
+### Final Status:
+```bash
+# Pipeline now runs successfully with:
+✅ No Unicode escape sequences
+✅ Clean YAML syntax validation
+✅ Successful GitLab CI execution
+✅ Ready for progressive enhancement
+```
+
+**Recommendation**: Always start with basic GitLab CI templates and build complexity gradually rather than attempting to fix encoding issues in complex configurations.
 
 ## Additional Resources
 
